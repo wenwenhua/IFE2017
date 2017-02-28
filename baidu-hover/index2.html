@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>有趣的鼠标悬浮模糊效果</title>
+    <style type="text/css">
+        #example{
+            width: 400px;
+            height: 218px;
+            margin: 200px auto;
+            background: url(bg.jpg) no-repeat center center;
+            position: relative;
+        }
+        #example .bg{
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transition: filter 0.3s linear;
+            background: url(bg.jpg) no-repeat center center;
+        }
+        #example:hover .bg{
+            -webkit-filter: blur(3px);
+            -moz-filter: blur(3px);
+            -o-filter: blur(3px);
+            -ms-filter: blur(3px);
+            filter: blur(3px);
+        }
+        #example .left-right,#example .top-bottom{
+            text-align: center;
+        }
+        #example .left-right{
+            width: 80%;
+            height: 80%;
+            margin: 0 auto;
+            position: absolute;
+            top: 10%;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 999;
+        }
+        #example .top-bottom{
+            height: 100%;
+        }
+         #example .top-bottom::before,  #example .top-bottom::after {
+            content: '';
+            position: absolute;
+            box-sizing: border-box;
+        }
+        #example .top-bottom:before{
+            content: "";
+            width: 100%;
+            height: 0%;
+            top: 50%;
+            left: 0;
+            border-left: 2px solid #fff;
+            border-right: 2px solid #fff;
+            -webkit-transition: height 0.3s linear,top 0.3s linear;
+            transition: height 0.3s linear,top 0.3s linear;
+        }
+        #example .top-bottom:after{
+            content: "";
+            width: 0%;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            border-top: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            -webkit-transition: width 0.3s linear,left 0.3s linear;
+            transition: width 0.3s linear,left 0.3s linear;
+        }
+        #example:hover .top-bottom:before {
+            height: 100%;
+            top: 0;
+        }
+        #example:hover .top-bottom:after {
+            width: 100%;
+            left: 0;
+        }
+        #example a{
+            display: block;
+            position: relative;
+            text-align: center;
+            z-index: 2;
+            height: 100%;
+            line-height: 174px;
+            font-size: 16px;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="example">
+            <!-- 有背景模糊 绝对定位-->
+            <div class="bg"></div>
+            <!-- 没有背景模糊 绝对定位，并且z-index大于div.bg-->
+            <div class="left-right">
+                <div class="top-bottom">
+                    <a href="###">欢迎参加百度前端学院</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

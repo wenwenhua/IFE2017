@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>有趣的鼠标悬浮模糊效果</title>
+    <style type="text/css">
+        #example{
+            width: 400px;
+            height: 218px;
+            margin: 200px auto;
+            background: url(bg.jpg) no-repeat center center;
+            position: relative;
+        }
+        #example .bg{
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transition: filter 0.3s linear;
+            -webkit-transition: -webkit-filter 0.3s linear;
+               -moz-transition:    -moz-filter 0.3s linear;
+                -ms-transition:     -ms-filter 0.3s linear;
+                 -o-transition:      -o-filter 0.3s linear;
+            background: url(bg.jpg) no-repeat center center;
+        }
+        #example:hover .bg{
+            -webkit-filter: blur(3px);
+            -moz-filter: blur(3px);
+            -o-filter: blur(3px);
+            -ms-filter: blur(3px);
+            filter: blur(3px);
+            transition: filter 0.3s linear;
+            -webkit-transition: -webkit-filter 0.3s linear;
+               -moz-transition:    -moz-filter 0.3s linear;
+                -ms-transition:     -ms-filter 0.3s linear;
+                 -o-transition:      -o-filter 0.3s linear;
+        }
+        #example .left-right,#example .top-bottom{
+            text-align: center;
+        }
+        #example .left-right{
+            width: 80%;
+            height: 80%;
+            margin: 0 auto;
+            position: absolute;
+            top: 10%;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 999;
+        }
+        #example .left-right:before,   #example .left-right:after,
+        #example .top-bottom:before,#example .top-bottom:after{
+            content: "";
+            color: #fff;
+            position: absolute;
+            -webkit-transform: scale3d(0.1, 0, 0.1);
+             transform: scale3d(0.1, 0, 0.1);
+            background-color: #fff;
+            -webkit-transition: -webkit-transform .3s ease-in-out;
+            transition: transform .3s ease-in-out;
+        }
+        /*左右两白线*/
+        #example .left-right:before, #example .left-right:after{
+            width: 2px;
+            height:100%;
+            top: 0;
+        }
+        /* 上下两白线*/
+        #example .top-bottom:before,#example .top-bottom:after{
+            height: 2px;
+            width: 100%;
+            left: 0;
+        }
+        #example .left-right:before{
+            left:0;
+            top: 0;
+        }
+        #example .left-right:after{
+            right: 0;
+        }
+        #example .top-bottom:before{
+            top: 0;
+        }
+        #example .top-bottom:after{
+            bottom: 0;
+        }
+        #example:hover .left-right:before,   #example:hover .left-right:after{
+            transform-origin: 0 50%;
+        }
+        #example:hover .top-bottom:before,#example:hover .top-bottom:after{
+            transform-origin:50% 0;
+        }
+        #example:hover .left-right:before,   #example:hover .left-right:after,
+        #example:hover .top-bottom:before,#example:hover .top-bottom:after{
+             -webkit-transform: scale3d(1, 1, 1);
+             transform: scale3d(1, 1, 1);
+        }
+        #example a{
+            display: block;
+            position: relative;
+            top: 20px;
+            opacity: 0;
+            text-align: center;
+            z-index: 2;
+            line-height: 182px;
+            font-size: 16px;
+            color: #fff;
+            -webkit-transition: opacity 0.3s linear,top 0.3s linear;
+               -moz-transition: opacity 0.3s linear,top 0.3s linear;
+                -ms-transition: opacity 0.3s linear,top 0.3s linear;
+                 -o-transition: opacity 0.3s linear,top 0.3s linear;
+                    transition: opacity 0.3s linear,top 0.3s linear;
+            font-weight: 600;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: -webkit-linear-gradient(left,yellow,red 25%,yellow 50%,red 75%,yellow 100%);
+            background-size: 200% 100%;
+        }
+        #example:hover a {
+            top: 0;
+            opacity: 1;
+            animation: color 3s linear infinite;
+            -webkit-animation: color 3s linear infinite;
+                      -moz-animation: color 3s linear infinite;
+                       -ms-animation: color 3s linear infinite;
+                         -o-animation: color 3s linear infinite;
+                              animation: color 3s linear infinite;
+        }
+        @keyframes color{
+            from{background-position:0% 0%;}
+            to{background-position:-100% 0%;}
+        }
+        @-webkit-keyframes color{
+            from{background-position:0% 0%;}
+            to{background-position:-100% 0%;}
+        }
+        @-ms-keyframes color{
+            from{background-position:0% 0%;}
+            to{background-position:-100% 0%;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="example">
+            <!-- 有背景模糊 绝对定位-->
+            <div class="bg"></div>
+            <!-- 没有背景模糊 绝对定位，并且z-index大于div.bg-->
+            <div class="left-right">
+                <div class="top-bottom">
+                    <a href="###">欢迎参加百度前端学院</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
