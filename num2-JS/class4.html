@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基础任务一</title>
+    <style type="text/css">
+        .container{
+            width: 400px;
+            height: 400px;
+            margin: 300px auto 0;
+        }
+        .btn-group{
+            margin: 20px auto;
+            text-align: center;
+        }
+        .container .queue{
+            text-align: center;
+        }
+        .queue input{
+            height: 36px;
+            width: 40px;
+            text-align: center;
+            font-size: 16px;
+            color: #ff5100;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="btn-group">
+            <button type="button">左侧入</button>
+            <button type="button">右侧入</button>
+            <button type="button">左侧出</button>
+            <button type="button">右测出</button>
+        </div>
+        <div class="queue">
+            <input type="text" name="">
+            <input type="text" name="">
+            <input type="text" name="">
+            <input type="text" name="">
+            <input type="text" name="">
+            <input type="text" name="">
+        </div>
+    </div>
+    <script type="text/javascript">
+        function Queue(){
+            var items = [];
+            // 尾部添加
+            this.enqueue = function(ele) {
+                items.push(element);
+            }
+            // 头部删除
+            this.dequeue = function(){
+                return items.unshift();
+            }
+            this.front = function(){
+                return items[0]
+            }
+            this.isEmpty = function(){
+                return items.length == 0;
+            }
+            this.clear = function(){
+                items = [];
+            }
+            this.size = function(){
+                return items.length;
+            }
+            this.print = function(){
+                console.log(items.toString());
+            }
+        }
+    </script>
+</body>
+</html>
