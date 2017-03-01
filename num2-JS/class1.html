@@ -27,7 +27,14 @@
         btn.addEventListener('click',function(){
           var value = value_input.value;
           // console.log(value)
-          show_span.innerHTML = value
+          if (value && show_span.firstChild.nodeValue != value) {
+            show_span.innerHTML = value;
+          }else if(show_span.firstChild.nodeValue == value){
+            alert('您未做任何修改，请确认');
+          }else{
+            alert('您还未输入任何内容，请确认')
+          }
+          console.log(value + "=========" +show_span.firstChild.nodeValue);
         },false)
     })();
 
