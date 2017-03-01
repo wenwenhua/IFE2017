@@ -16,14 +16,7 @@
     <li>成都空气质量：<b>90</b></li>
   </ul>
 
-  <ul id="resort">
-    <!--
-    <li>第一名：北京空气质量：<b>90</b></li>
-    <li>第二名：北京空气质量：<b>90</b></li>
-    <li>第三名：北京空气质量：<b>90</b></li>
-     -->
-
-  </ul>
+  <ul id="resort"></ul>
 
   <button id="sort-btn">排序</button>
 
@@ -79,7 +72,11 @@ function render(data) {
      fra.appendChild(li);
   }
   //一次将文档片段添加到页面中
-  ul.appendChild(fra);
+  if (ul.childNodes.length <= 0) {
+    ul.appendChild(fra);
+  }else{
+    alert('排序已完成，请勿重复点击')
+  }
 }
 
 function btnHandle() {
