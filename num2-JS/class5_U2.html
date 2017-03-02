@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 05</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-top: 400px;
+        }
+
+        li {
+            float: left;
+            display: block;
+            background-color: cornflowerblue;
+            margin-right: 4px;
+            position: relative;
+            width: 12px;
+            font-size: 8px;
+            padding: 4px;
+        }
+
+        #box {
+            width: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <input id="num-input" type="number">
+    <button id="add-left" onclick="add_left()">左侧入</button>
+    <button id="add-right" onclick="add_right()">右侧入</button>
+    <button id="del-left" onclick="del_left()">左侧出</button>
+    <button id="del-right" onclick="del_right()">右侧出</button>
+    <button id="bubblesort" onclick="bubbleSort()">可视化冒泡排序</button>
+    <div id="box">
+        <ul id="num-display"></ul>
+    </div>
+    <script type="text/javascript">
+        //将li根据数字变成柱状图
+        function changeBar() {
+            var li = document.getElementsByTagName("li");
+            for (var i = 0; i < li.length; i++) {
+                li[i].style.height = 3 * li[i].textContent + "px";
+                li[i].style.top = "-" + 3 * li[i].textContent + "px";
+            }
+        }
+        //创建随机60个10-100之间的数字，并绘制成柱状图
+        function addNum() {
+            var list = document.getElementById("num-display");
+            var data = new Array(12);
+            for (var i = 0; i < 12; i++) {
+                data[i] = Math.round((Math.random() * 90 + 10));
+                var node = document.createTextNode(data[i]);
+                var newItem = document.createElement("LI");
+                newItem.appendChild(node);
+                list.appendChild(newItem);
+            }
+            changeBar();
+            del();
+        }
+        addNum();
+        // //为每一个li元素绑定onclick事件，点击可删除该元素
+        function del() {
+            var li = document.getElementsByTagName("li");
+            var list = document.getElementById("num-display");
+            for (var i = 0; i < li.length; i++) {
+                li[i].onclick = function () {
+                    if (list.hasChildNodes()) {
+                        list.removeChild(this);
+                    }
+                }
+            }
+        }
+        // //清除所有LI元素
+        function clearLi() {
+            var list = document.getElementById("num-display");
+            while (list.hasChildNodes()) {
+                list.removeChild(list.childNodes[0]);
+            }
+        }
+        del();
+        var snap = [];
+        var timer = null;
+        //冒泡排序
+        function bubbleSort() {
+            var li = document.getElementsByTagName("li");
+            var data = [];
+            snap = [];
+            for (var i = 0; i < li.length; i++) {
+                data.push(parseInt(li[i].textContent));
+            }
+            for (var i = 0; i < data.length - 1; i++) {
+                for (var j = 0; j < data.length - i - 1; j++) {
+                    if (data[j] > data[j + 1]) {
+                        temp = data[j];
+                        data[j] = data[j + 1];
+                        data[j + 1] = temp;
+                        snap.push(JSON.parse(JSON.stringify(data)));
+                    }
+                }
+            }
+            timer = setInterval(painting, 50);
+        }
+        function painting() {
+            var snapshot = snap.shift() || [];
+            if (snapshot.length != 0) {
+                clearLi();
+                var list = document.getElementById("num-display");
+                for (var i = 0; i < snapshot.length; i++) {
+                    var node = document.createTextNode(snapshot[i]);
+                    var newItem = document.createElement("LI");
+                    newItem.appendChild(node);
+                    list.appendChild(newItem);
+                }
+                changeBar();
+                del();
+            } else {
+                clearInterval(timer);
+                return;
+            }
+        }
+        // function add_left() {
+        //     var inputNum = document.getElementById("num-input").value;
+        //     var li = document.getElementsByTagName("li");
+        //     if (li.length < 60) {
+        //         if (inputNum != "") {
+        //             if (parseInt(inputNum) >= 10 && parseInt(inputNum) <= 100) {
+        //                 var node = document.createTextNode(inputNum);
+        //                 var newItem = document.createElement("LI");
+        //                 newItem.appendChild(node);
+        //                 var list = document.getElementById("num-display");
+        //                 list.insertBefore(newItem, list.childNodes[0]);
+        //                 del();
+        //                 changeBar();
+        //             } else {
+        //                 alert("请输入10-100之间的数字！");
+        //             }
+        //         } else {
+        //             alert("请输入数值！");
+        //         }
+        //     } else {
+        //         alert("已有60个元素，无法再输入！");
+        //     }
+        // }
+        // function add_right() {
+        //     var inputNum = document.getElementById("num-input").value;
+        //     var li = document.getElementsByTagName("li");
+        //     if (li.length < 60) {
+        //         if (inputNum != "") {
+        //             if (parseInt(inputNum) >= 10 && parseInt(inputNum) <= 100) {
+        //                 var node = document.createTextNode(inputNum);
+        //                 var newItem = document.createElement("LI");
+        //                 newItem.appendChild(node);
+        //                 var list = document.getElementById("num-display");
+        //                 list.appendChild(newItem);
+        //                 del();
+        //                 changeBar();
+        //             } else {
+        //                 alert("请输入10-100之间的数字！");
+        //             }
+        //         } else {
+        //             alert("请输入数值！");
+        //         }
+        //     } else {
+        //         alert("已有60个元素，无法再输入！");
+        //     }
+        // }
+        // function del_left() {
+        //     var list = document.getElementById("num-display");
+        //     if (list.hasChildNodes()) {
+        //         var n = list.childNodes[0].textContent;
+        //         list.removeChild(list.childNodes[0]);
+        //         alert("最左侧数值已被删除，其值为：" + n);
+        //     } else {
+        //         alert("已无子节点可删除！");
+        //     }
+        // }
+        // function del_right() {
+        //     var list = document.getElementById("num-display");
+        //     if (list.hasChildNodes()) {
+        //         var n = list.lastChild.textContent;
+        //         list.removeChild(list.lastChild);
+        //         alert("最右侧数值已被删除，其值为：" + n);
+        //     } else {
+        //         alert("已无子节点可删除！");
+        //     }
+        // }
+    </script>
+</body>
+
+</html>

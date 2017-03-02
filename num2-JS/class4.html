@@ -27,14 +27,19 @@
             height: 50px;
             border: #999 solid 1px;
         }
-        .queue input{
+        .queue div{
+            display: inline-block;
             height: 36px;
+            line-height: 36px;
             width: 40px;
             text-align: center;
             font-size: 16px;
             color: #333;
             margin-left: 12px ;
             margin-top: 4px;
+            border: #999 solid 1px;
+            background-color: #f5f5f5;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -64,23 +69,31 @@
             inputValue = document.getElementById('input').value;
         // 右入
         enR.addEventListener('click',function(){
-            var input = document.createElement('input'),
+            var input = document.createElement('div'),
             ele = getInput();
             if (ele && ele.match(/^[0-9]\d*/)) {
-                input.value = ele;
+                input.innerHTML = ele;
                 input.disabled = 'disabled';
                 container.appendChild(input);
+                // 为queue中的每一个元素绑定一个click事件，点击删除自己
+                input.onclick = function(){
+                    container.removeChild(this);
+                }
             }else{
                 alert('请输入数字')
             }
         },false);
         // 左入
         enL.addEventListener('click',function(){
-            var input = document.createElement('input'),
+            var input = document.createElement('div'),
             ele = getInput();
             if (ele && ele.match(/^[0-9]\d*/)) {
-                input.value = ele;
+                input.innerHTML = ele;
                 input.disabled = 'disabled';
+                // 为queue中的每一个元素绑定一个click事件，点击删除自己
+                input.onclick = function(){
+                    container.removeChild(this);
+                }
                 if (container.firstElementChild) {
                     container.insertBefore(input, container.firstElementChild);
                 } else {
@@ -93,7 +106,7 @@
         // 左出
         outL.addEventListener('click',function(){
             if (container.childNodes.length > 0) {
-                alert(container.firstElementChild.value);
+                alert(container.firstElementChild.innerHTML);
                 container.removeChild(container.firstElementChild);
             }else{
                 alert('队列中还没有元素')
@@ -102,7 +115,7 @@
         // 右出
         outR.addEventListener('click',function(){
             if (container.childNodes.length > 0) {
-                alert(container.lastElementChild.value);
+                alert(container.lastElementChild.innerHTML);
                 container.removeChild(container.lastElementChild);
             }else{
                 alert('队列中还没有元素')
