@@ -55,8 +55,8 @@
         //创建随机60个10-100之间的数字，并绘制成柱状图
         function addNum() {
             var list = document.getElementById("num-display");
-            var data = new Array(12);
-            for (var i = 0; i < 12; i++) {
+            var data = new Array(6);
+            for (var i = 0; i < 6; i++) {
                 data[i] = Math.round((Math.random() * 90 + 10));
                 var node = document.createTextNode(data[i]);
                 var newItem = document.createElement("LI");
