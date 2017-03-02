@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基础任务一</title>
+    <style type="text/css">
+        .container{
+            width: 1200px;
+            height: 400px;
+            margin: 300px auto 0;
+        }
+        .container > input{
+            width: 60%;
+            margin: 0 20%;
+            text-align: center;
+            height: 32px;
+        }
+        .btn-group{
+            margin: 20px auto;
+            text-align: center;
+        }
+        .container .queue{
+            text-align: center;
+        }
+        .queue {
+            min-width: 200px;
+            min-height: 10px;
+            border: #999 solid 1px;
+            position: relative;
+        }
+        .queue input{
+            height: 36px;
+            width: 40px;
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+            margin-left: 12px ;
+            margin-top: 4px;
+            vertical-align: bottom;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input id="input" type="text" name="" value="" placeholder="请输入10~100之间的数字">
+        <div class="btn-group">
+            <button id="enterLeft" type="button">左侧入</button>
+            <button id="enterRight" type="button">右侧入</button>
+            <button id="outLeft" type="button">左侧出</button>
+            <button id="outRight" type="button">右测出</button>
+        </div>
+        <div id="queue" class="queue"></div>
+    </div>
+    <script type="text/javascript">
+        // 获取input框的值
+        function getInput(){
+            var input = document.getElementById('input');
+            return input.value;
+        }
+
+        var enL = document.getElementById('enterLeft'),
+            enR = document.getElementById('enterRight'),
+            outL = document.getElementById('outLeft'),
+            outR = document.getElementById('outRight'),
+            container = document.getElementById('queue'),
+            inputValue = document.getElementById('input').value;
+        // 右入
+        enR.addEventListener('click',function(){
+            var input = document.createElement('input'),
+            ele = getInput();
+            if (container.childElementCount <= 60) {
+                if (ele && ele.match(/^[0-9]\d*/) && (ele >= 10 && ele <=100)) {
+                    input.value = ele;
+                    input.disabled = 'disabled';
+                    container.appendChild(input);
+                    input.style.height = ele+"px"
+                }else{
+                    alert('请输入符合要求的数字')
+                }
+            }else{
+                alert(ele);
+            }
+        },false);
+        // 左入
+        enL.addEventListener('click',function(){
+            var input = document.createElement('input'),
+            ele = getInput();
+            if (container.childElementCount < 60) {
+                if (ele && ele.match(/^[0-9]\d*/) && (ele >= 10 && ele <=100)) {
+                    input.value = ele;
+                    input.disabled = 'disabled';
+                    if (container.firstElementChild) {
+                        container.insertBefore(input, container.firstElementChild);
+                    } else {
+                        container.appendChild(input);
+                    }
+                    input.style.height = ele+"px"
+                }else{
+                    alert('请输入符合要求的数字')
+                }
+            }else{
+                alert(ele);
+            }
+        },false);
+        // 左出
+        outL.addEventListener('click',function(){
+            if (container.childNodes.length > 0) {
+                alert(container.firstElementChild.value);
+                container.removeChild(container.firstElementChild);
+            }else{
+                alert('队列中还没有元素')
+            }
+        },false);
+        // 右出
+        outR.addEventListener('click',function(){
+            if (container.childNodes.length > 0) {
+                alert(container.lastElementChild.value);
+                container.removeChild(container.lastElementChild);
+            }else{
+                alert('队列中还没有元素')
+            }
+
+        },false);
+
+    </script>
+</body>
+</html>
