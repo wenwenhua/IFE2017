@@ -52,6 +52,7 @@
             <button id="enterRight" type="button">右侧入</button>
             <button id="outLeft" type="button">左侧出</button>
             <button id="outRight" type="button">右测出</button>
+            <button id="sort" type="button">排序</button>
         </div>
         <div id="queue" class="queue"></div>
     </div>
@@ -67,6 +68,7 @@
             outL = document.getElementById('outLeft'),
             outR = document.getElementById('outRight'),
             container = document.getElementById('queue'),
+            sortBtn = document.getElementById('sort'),
             inputValue = document.getElementById('input').value;
         // 右入
         enR.addEventListener('click',function(){
@@ -81,7 +83,7 @@
                         container.removeChild(this);
                     }
                     container.appendChild(input);
-                    input.style.height = ele+"px"
+                    input.style.height = 3 * ele+"px"
                 }else{
                     alert('请输入符合要求的数字')
                 }
@@ -106,7 +108,7 @@
                     } else {
                         container.appendChild(input);
                     }
-                    input.style.height = ele+"px"
+                    input.style.height = 3 * ele+"px"
                 }else{
                     alert('请输入符合要求的数字')
                 }
@@ -134,6 +136,92 @@
 
         },false);
 
+        var container = document.getElementById("queue");
+        //将柱状图的高度设为其值的3倍
+        function changeBar() {
+            var div = document.querySelectorAll(".queue div"), divLen = div.length;
+            for (var i = 0; i < divLen; i++) {
+                div[i].style.height = 3 * div[i].textContent + "px";
+            }
+        }
+        //为每根柱状图绑定一个click事件，点击删除自身
+        function del() {
+            var div = document.querySelectorAll(".queue div"), divLen = div.length, i = 0;
+            for (i = 0; i < divLen; i++) {
+                div[i].onclick = function () {
+                    if (container.hasChildNodes()) {
+                        container.removeChild(this);
+                    }
+                }
+            }
+        }
+        //创建随机60个10-100之间的数字，并绘制成柱状图
+        function addNum() {
+            var div = document.querySelectorAll(".queue div"), divLen = div.length;
+            var data = new Array(12),i = 0 ;
+            for (i = 0; i < 12; i++) {
+                data[i] = Math.round((Math.random() * 90 + 10));//获取【10，100）之间的随机数
+                var node = document.createTextNode(data[i]);
+                var newItem = document.createElement("div");
+                newItem.appendChild(node);
+                container.appendChild(newItem);
+            }
+            changeBar();
+            del();
+        }
+        addNum();
+        // 获取柱状图的值
+        function getText(){
+            var div = document.querySelectorAll(".queue div"), divLen = div.length, i = 0, data = [];
+            for (i = 0; i < divLen; i++) {
+                data.push(parseInt(div[i].firstChild.nodeValue));
+            }
+            return data;
+        }
+        // 冒泡排序
+        var timer, dataTwo = [];
+        function bubbleSort(data){
+            var i = 0, j = 0, temp = 0;
+            dataTwo = [];
+            for (i = 0; i < data.length - 1; i++) {
+                for (j = 0; j < data.length - i -1; j++) {
+                    if (data[j] > data[j + 1]) {
+                        temp = data[j];
+                        data[j] = data[j + 1];
+                        data[j + 1] = temp;
+                        dataTwo.push(JSON.parse(JSON.stringify(data)));
+                        // console.log(data);
+                        // console.log(JSON.parse(JSON.stringify(data)));
+                    }
+                }
+            }
+            timer = setInterval(canvasProgress,100);
+        }
+        // 显示排序过程
+        function canvasProgress(){
+            var spot = dataTwo.shift() || [];
+            if (spot.length > 0) {
+                while (container.hasChildNodes()) {
+                    container.removeChild(container.childNodes[0]);
+                }
+                for (var i = 0; i < spot.length; i++) {
+                    var txt = document.createTextNode(spot[i]);
+                    var item = document.createElement('div');
+                    item.appendChild(txt);
+                    container.appendChild(item);
+                }
+                changeBar();
+                del();
+            }else{
+                clearInterval(timer);
+                alert('排序完成~！')
+                return;
+            }
+        }
+        // 绑定排序
+        sortBtn.addEventListener('click',function(){
+            bubbleSort(getText())
+        },false);
     </script>
 </body>
 </html>
