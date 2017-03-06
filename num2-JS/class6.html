@@ -25,13 +25,13 @@
         .queue {
             min-width: 200px;
             height: 50px;
-            border: #999 solid 1px;
+            /*border: #999 solid 1px;*/
         }
         .queue div{
             display: inline-block;
-            height: 36px;
-            line-height: 36px;
-            width: 40px;
+            height: auto;
+            line-height: 1.6;
+            width: auto;
             text-align: center;
             font-size: 16px;
             color: #333;
@@ -57,7 +57,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- <input id="input" type="text" name="" value=""> -->
         <textarea id="textarea" name=""></textarea>
         <div class="btn-group">
             <button id="enterLeft" type="button">左侧入</button>
@@ -72,7 +71,80 @@
         <div id="queue" class="queue"></div>
     </div>
     <script type="text/javascript">
+        // 获取input框的值
+        function getInput(){
+            var input = document.getElementById('textarea');
+            if (input.value.trim() && input.value.trim().search(/[^\da-zA-Z\u4e00-\u9fa5]+/g)) {
+                return input.value.trim().split(/[,，、;； /s]+/g);//split(/[,，、;；\s]+/g)//
+            }else{
+                alert("请输入数字、中文、英文");
+                return [];
+            }
+            console.log(input.value.trim().split(/[,，、;；\s]+/g));
+        }
+        // console.log(getInput());
+        var enL = document.getElementById('enterLeft'),
+            enR = document.getElementById('enterRight'),
+            outL = document.getElementById('outLeft'),
+            outR = document.getElementById('outRight'),
+            container = document.getElementById('queue'),
+            inputValue = document.getElementById('textarea').value;
+        // 右入
+        enR.addEventListener('click',function(){
+            var input,ele = getInput();
+            if (ele.length > 0) {
+                for (var i = 0; i < ele.length; i++) {
+                    input = document.createElement('div');
+                    input.innerHTML = ele[i];
+                    input.disabled = 'disabled';
+                    container.appendChild(input);
+                    // 为queue中的每一个元素绑定一个click事件，点击删除自己
+                    input.onclick = function(){
+                        container.removeChild(this);
+                    }
+                }
+            }
+        },false);
+        // 左入
+        enL.addEventListener('click',function(){
+            var input, ele = getInput();
+            if (ele.length > 0) {
+                for (var i = 0; i < ele.length; i++) {
+                    var input = document.createElement('div');
+                    input.innerHTML = ele[i];
+                    input.disabled = 'disabled';
+                    container.appendChild(input);
+                    // 为queue中的每一个元素绑定一个click事件，点击删除自己
+                    input.onclick = function(){
+                        container.removeChild(this);
+                    }
+                    if (container.firstElementChild) {
+                        container.insertBefore(input, container.firstElementChild);
+                    } else {
+                        container.appendChild(input);
+                    }
+                }
+            }
+        },false);
+        // 左出
+        outL.addEventListener('click',function(){
+            if (container.childNodes.length > 0) {
+                alert(container.firstElementChild.innerHTML);
+                container.removeChild(container.firstElementChild);
+            }else{
+                alert('队列中还没有元素')
+            }
+        },false);
+        // 右出
+        outR.addEventListener('click',function(){
+            if (container.childNodes.length > 0) {
+                alert(container.lastElementChild.innerHTML);
+                container.removeChild(container.lastElementChild);
+            }else{
+                alert('队列中还没有元素')
+            }
 
+        },false);
     </script>
 </body>
 </html>

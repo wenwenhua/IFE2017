@@ -1,0 +1,31 @@
+.flex-container{
+	display: flex;
+	justify-content: flex-start;
+	flex-flow: row wrap;
+}
+
+ul {
+    margin: 0;
+    padding: 10px;
+}
+li{
+    list-style: none;
+    background: tomato;
+    padding: 10px;
+    margin: 10px;
+    height: 30px;
+    margin-top: 10px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+button{
+    border-radius: 5px;
+}
+.border{
+    border: solid 2px black;
+}
+span{
+    color:black;
+    font-size: 2em;
+}
