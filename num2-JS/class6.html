@@ -25,7 +25,6 @@
         .queue {
             min-width: 200px;
             height: 50px;
-            /*border: #999 solid 1px;*/
         }
         .queue div{
             display: inline-block;
@@ -53,6 +52,9 @@
             width: 20%;
             height: 36px;
         }
+        .queue div.border{
+            border: #ff5100 solid 1px;
+        }
     </style>
 </head>
 <body>
@@ -66,7 +68,7 @@
         </div>
         <div class="filter">
             <input type="text" name="">
-            <button type="button">查询</button>
+            <button id="inquiry" type="button">查询</button>
         </div>
         <div id="queue" class="queue"></div>
     </div>
@@ -88,6 +90,7 @@
             outL = document.getElementById('outLeft'),
             outR = document.getElementById('outRight'),
             container = document.getElementById('queue'),
+            inquiry = document.getElementById('inquiry'),
             inputValue = document.getElementById('textarea').value;
         // 右入
         enR.addEventListener('click',function(){
@@ -143,8 +146,30 @@
             }else{
                 alert('队列中还没有元素')
             }
-
         },false);
+        // 查询
+        var valueDOM = '', index = [];
+        inquiry.addEventListener('click',function(){
+            var textArr = document.querySelectorAll('#queue div'), i = 0, len = textArr.length;
+            var txt = document.querySelector('.filter input').value, arr = '';
+            if (index.length > 0) {
+                for (var j = 0; j < index.length; j++) {
+                    textArr[index].className="";
+                    textArr[index].innerHTML =valueDOM;
+                }
+            }
+            for (i = 0; i < len; i++) {
+                arr = textArr[i].childNodes[0].nodeValue;
+                console.log(arr);
+                if (arr.indexOf(txt) > -1) {
+                    valueDOM = textArr[i].childNodes[0].nodeValue;
+                    index.push(i);
+                    textArr[i].className="border";
+                    textArr[i].innerHTML = arr.substr(0,arr.indexOf(txt)) +"<em style='color:#ff5100;font-style:normal;'>"+ txt +"</em>"+arr.substr(arr.indexOf(txt) + 1,arr.length);
+                }
+            }
+            // console.log(arr);
+        })
     </script>
 </body>
 </html>
