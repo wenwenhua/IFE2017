@@ -152,7 +152,7 @@
         inquiry.addEventListener('click',function(){
             var textArr = document.querySelectorAll('#queue div'), i = 0, len = textArr.length;
             var txt = document.querySelector('.filter input').value, arr = '';
-            if (index.length > 0) {
+            if (index.length >= 0) {
                 for (var j = 0; j < index.length; j++) {
                     textArr[index[j]].className="";
                     textArr[index[j]].innerHTML = valueDOM[j];
