@@ -148,25 +148,32 @@
             }
         },false);
         // 查询
-        var valueDOM = '', index = [];
+        var valueDOM = [], index = [];
         inquiry.addEventListener('click',function(){
             var textArr = document.querySelectorAll('#queue div'), i = 0, len = textArr.length;
             var txt = document.querySelector('.filter input').value, arr = '';
             if (index.length > 0) {
                 for (var j = 0; j < index.length; j++) {
-                    textArr[index].className="";
-                    textArr[index].innerHTML =valueDOM;
+                    textArr[index[j]].className="";
+                    textArr[index[j]].innerHTML = valueDOM[j];
+                    // console.log(valueDOM[j]);
                 }
             }
             for (i = 0; i < len; i++) {
                 arr = textArr[i].childNodes[0].nodeValue;
-                console.log(arr);
+                // console.log(arr);
                 if (arr.indexOf(txt) > -1) {
-                    valueDOM = textArr[i].childNodes[0].nodeValue;
+                    index = [];
+                    valueDOM.push(textArr[i].childNodes[0].nodeValue);
                     index.push(i);
+                    // console.log(valueDOM);
+                    // console.log(index);
                     textArr[i].className="border";
-                    textArr[i].innerHTML = arr.substr(0,arr.indexOf(txt)) +"<em style='color:#ff5100;font-style:normal;'>"+ txt +"</em>"+arr.substr(arr.indexOf(txt) + 1,arr.length);
+                    textArr[i].innerHTML = arr.substr(0,arr.indexOf(txt)) +"<em style='color:#ff5100;font-style:normal;'>"+ txt +"</em>"+arr.substr(arr.indexOf(txt) + txt.length,arr.length);
                 }
+            }
+            if (index.length <= 0) {
+                alert("没有匹配元素")
             }
             // console.log(arr);
         })
